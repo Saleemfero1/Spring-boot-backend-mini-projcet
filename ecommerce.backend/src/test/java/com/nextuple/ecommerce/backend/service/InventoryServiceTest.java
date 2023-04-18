@@ -1,28 +1,20 @@
 package com.nextuple.ecommerce.backend.service;
-
-import com.nextuple.ecommerce.backend.controller.RESTInventoryController;
 import com.nextuple.ecommerce.backend.model.Inventory;
 import com.nextuple.ecommerce.backend.model.Orders;
 import com.nextuple.ecommerce.backend.repository.InventoryRepository;
 import com.nextuple.ecommerce.backend.repository.OrdersRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
-
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {InventoryService.class})

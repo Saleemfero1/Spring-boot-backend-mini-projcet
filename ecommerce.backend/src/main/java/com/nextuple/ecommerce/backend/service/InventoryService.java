@@ -41,7 +41,7 @@ public class InventoryService {
             }
         }
         boolean addPurchase = orders.isEmpty();
-        if (addPurchase == false) {
+        if (!addPurchase) {
             ordersRepository.save(new Orders(orders, "Purchase"));
         }
         return messages;
@@ -83,6 +83,8 @@ public class InventoryService {
     public void deleteAll(){
         inventoryRepository.deleteAll();
     }
+
+    public void deleteAllTransaction(){ordersRepository.deleteAll();}
 
     public List<String> saleOrder(List<Inventory> products){
         List<Inventory> orders = new ArrayList<Inventory>();
@@ -130,7 +132,7 @@ public class InventoryService {
         }
 
         boolean addPurchase = orders.isEmpty();
-        if (addPurchase == false) {
+        if (!addPurchase) {
             ordersRepository.save(new Orders(orders, "Sale"));
         }
         return messages;
@@ -195,7 +197,6 @@ public class InventoryService {
 
     //Find Product By Code
     public Inventory getProductByCode(String productCode){
-        Inventory inv = inventoryRepository.findByProductCode(productCode);
-        return inv;
+        return inventoryRepository.findByProductCode(productCode);
     }
 }

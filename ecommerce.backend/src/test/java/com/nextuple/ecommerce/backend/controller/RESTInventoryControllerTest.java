@@ -1,19 +1,12 @@
 package com.nextuple.ecommerce.backend.controller;
-
 import com.nextuple.ecommerce.backend.model.Inventory;
 import com.nextuple.ecommerce.backend.model.Orders;
 import com.nextuple.ecommerce.backend.service.InventoryService;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,13 +33,13 @@ class RESTInventoryControllerTest {
         List<String> successMessages = Arrays.asList("Product 'product1' created successfully", "Product 'product2' created successfully", "Product 'product3' created successfully");
         when(inventoryService.createProduct(productList)).thenReturn(successMessages);
 
-        List<String> messages = restInventoryController.purchaseOrder(productList);
+        List<String> messages = restInventoryController.purchaseOrder(productList).getBody();
         assertEquals(successMessages, messages);
     }
 
     void purchaseOrder1() {
         List<Inventory> productList = new ArrayList<>();
-        assertTrue(restInventoryController.purchaseOrder(productList).isEmpty());
+        assertTrue(restInventoryController.purchaseOrder(productList).getBody().isEmpty());
     }
 
     @Test
@@ -60,13 +53,13 @@ class RESTInventoryControllerTest {
 
         when(inventoryService.createProduct(productList)).thenReturn(successMessages);
 
-        List<String> messages = restInventoryController.purchaseOrder(productList);
+        List<String> messages = restInventoryController.purchaseOrder(productList).getBody();
         assertEquals(successMessages, messages);
     }
 
     void saleOrder1() {
         List<Inventory> productList = new ArrayList<>();
-        assertTrue(restInventoryController.saleOrder(productList).isEmpty());
+        assertTrue(restInventoryController.saleOrder(productList).getBody().isEmpty());
     }
 
     @Test
@@ -77,7 +70,7 @@ class RESTInventoryControllerTest {
         productList.add(new Inventory("45", "Product Name3", "Product Category", 1, 1, "Product Code3"));
 
         when(inventoryService.inventoryDetails()).thenReturn(productList);
-        List<Inventory> actualInventory = restInventoryController.inventoryDetails();
+        List<Inventory> actualInventory = restInventoryController.inventoryDetails().getBody();
         assertEquals(productList, actualInventory);
     }
 
@@ -90,7 +83,7 @@ class RESTInventoryControllerTest {
         List<String> successMessages = Arrays.asList("Product Product Code Deleted", "Product Product Code2 Deleted");
         when(inventoryService.deleteProduct(productList)).thenReturn(successMessages);
 
-        List<String> message = restInventoryController.deleteProduct(productList);
+        List<String> message = restInventoryController.deleteProduct(productList).getBody();
         assertSame(successMessages, message);
     }
 
@@ -102,7 +95,7 @@ class RESTInventoryControllerTest {
         productList.add(new Inventory("43", "Product Name2", "Product Category", 1, 1, "Product Code2"));
 
         inventoryService.deleteAll();
-        String message = restInventoryController.deleteAll();
+        String message = restInventoryController.deleteAll().getBody();
         assertEquals("All the items from your Inventory is deleted.", message);
 
     }
@@ -119,7 +112,7 @@ class RESTInventoryControllerTest {
         productList.add(new Inventory("43", "Product Name2", "Product Category", 1, 1, "Product Code2"));
         List<String> updateMessage = Arrays.asList("Product Product Code Updated.", "Product Product Code2 Updated.");
         when(inventoryService.updateProduct(productList)).thenReturn(updateMessage);
-        List<String> message = restInventoryController.updateProduct(productList);
+        List<String> message = restInventoryController.updateProduct(productList).getBody();
         assertEquals(updateMessage, message);
     }
 
@@ -131,7 +124,7 @@ class RESTInventoryControllerTest {
         transactionsList.add("Sale: " + 1);
 
         when(inventoryService.transactions()).thenReturn(transactionsList);
-        List<String> actualTransaction = restInventoryController.transactions();
+        List<String> actualTransaction = restInventoryController.transactions().getBody();
         assertEquals(transactionsList, actualTransaction);
     }
 
@@ -140,7 +133,7 @@ class RESTInventoryControllerTest {
         List<Inventory> productList = Arrays.asList(new Inventory("42", "Product Name", "Product Category", 1, 1, "Product Code"), new Inventory("42", "Product Name", "Product Category", 1, 1, "Product Code"));
         List<Orders> ordersList = List.of(new Orders(productList, "purchase"));
         when(inventoryService.purchaseOrders()).thenReturn(ordersList);
-        List<Orders> actualOrdersList = restInventoryController.purchaseTransaction();
+        List<Orders> actualOrdersList = restInventoryController.purchaseTransaction().getBody();
         assertSame("purchase", actualOrdersList.get(0).getOrderType());
     }
 
@@ -149,7 +142,7 @@ class RESTInventoryControllerTest {
         List<Inventory> productList = Arrays.asList(new Inventory("42", "Product Name", "Product Category", 1, 1, "Product Code"), new Inventory("42", "Product Name", "Product Category", 1, 1, "Product Code"));
         List<Orders> ordersList = List.of(new Orders(productList, "sale"));
         when(inventoryService.saleOrders()).thenReturn(ordersList);
-        List<Orders> actualOrdersList = restInventoryController.saleTransaction();
+        List<Orders> actualOrdersList = restInventoryController.saleTransaction().getBody();
         assertSame("sale", actualOrdersList.get(0).getOrderType());
     }
 }

@@ -1,5 +1,4 @@
 package com.nextuple.ecommerce.backend.service;
-
 import com.nextuple.ecommerce.backend.model.Inventory;
 import com.nextuple.ecommerce.backend.model.Orders;
 import com.nextuple.ecommerce.backend.repository.InventoryRepository;
